@@ -3,25 +3,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Scanner sc = new Scanner(System.in);
 
         int answerCount = 0;
 
-        int n = sc.nextInt();
-        int m = sc.nextInt();
+        String numberInput = br.readLine();
+        String[] number = numberInput.split(" ");
+
 
         HashMap<String, Integer> S = new HashMap<>();
 
-        for(int i = 0 ; i < n; i++){
-            S.put(sc.next(), 1);
+        for(int i = 0 ; i < Integer.parseInt(number[0]); i++){
+            S.put(br.readLine(), 1);
         }
 
-        for(int i = 0 ; i < m; i++){
-            String userInput = sc.next();
+        for(int i = 0 ; i < Integer.parseInt(number[1]); i++){
+            String userInput = br.readLine();
 
             if(S.get(userInput) != null){
                 answerCount++;
