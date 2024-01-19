@@ -11,17 +11,18 @@ public class Main {
 
         int answerCount = 0;
 
-        String numberInput = br.readLine();
-        String[] number = numberInput.split(" ");
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
 
         HashMap<String, Integer> S = new HashMap<>();
 
-        for(int i = 0 ; i < Integer.parseInt(number[0]); i++){
+        for(int i = 0 ; i < n; i++){
             S.put(br.readLine(), 1);
         }
 
-        for(int i = 0 ; i < Integer.parseInt(number[1]); i++){
+        for(int i = 0 ; i < m; i++){
             String userInput = br.readLine();
 
             if(S.get(userInput) != null){
