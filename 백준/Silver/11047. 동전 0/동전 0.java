@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -20,16 +19,12 @@ public class Main {
         }
 
         for(int coin : wallet){
-            while(k >= coin){
-                k -= coin;
-                count++;
+            while(k >= coin && k / coin >= 0){
+                count += k/coin;
+                k -= (k/coin * coin);
             }
         }
 
         System.out.println(count);
-
-
-
-
     }
 }
