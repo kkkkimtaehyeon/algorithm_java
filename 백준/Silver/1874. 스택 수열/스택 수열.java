@@ -3,16 +3,17 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class Main {
-    public static String solution(Stack<Integer> stack, int[] arr, int n) {
+    public static String solution() {
+        Scanner sc = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
-        int idx = 1;
+        Stack<Integer> stack = new Stack<>();
+        int n = sc.nextInt();
+        int idx = 0;
+        stack.push(idx++);
+        int target;
 
-        for (int target : arr) {
-            if (stack.isEmpty()) {
-                stack.push(idx++);
-                sb.append("+\n");
-
-            }
+        for (int i = 0; i < n; i++) {
+            target = sc.nextInt();
             while (stack.peek() != target) {
                 if (idx > n + 1) {
                     return "NO";
@@ -29,16 +30,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
-        }
-
-        Stack<Integer> stack = new Stack<>();
-
-        System.out.println(solution(stack, arr, n));
+        System.out.println(solution());
 
     }
 }
