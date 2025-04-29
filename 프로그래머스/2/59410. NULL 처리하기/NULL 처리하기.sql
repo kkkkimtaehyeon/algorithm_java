@@ -1,3 +1,2 @@
--- 코드를 입력하세요
-select animal_type, COALESCE(name, 'No name') name, sex_upon_intake
-from animal_ins;
+SELECT ANIMAL_TYPE, IFNULL(NAME, 'No name'), SEX_UPON_INTAKE
+FROM ANIMAL_INS
