@@ -1,37 +1,38 @@
 import java.util.*;
-
 class Solution {
     final static Map<Character, Character> map = new HashMap<>();
-
-    public int solution(String vps) {
+    static {
         map.put('(', ')');
         map.put('{', '}');
         map.put('[', ']');
+    }
 
-
+    public int solution(String vps) {
         int answer = 0;
         for(int x = 0; x < vps.length(); x++) {
             String rotatedVps = rotate(vps, x);
-            Stack<Character> stack = new Stack<>();
-            boolean isFail = false;
-
-            for(Character c: rotatedVps.toCharArray()) {
-                if (isOpenParentheses(c)) {
-                    stack.push(c);
-                } else {
-                    if (!stack.isEmpty() && isMatch(stack.peek(), c)) {
-                        stack.pop();
-                    } else {
-                        isFail = true;
-                        break;
-                    }
-                }
-            }
-            if (!isFail && stack.isEmpty()) {
+            if (isValidVps(rotatedVps)) {
                 answer++;
             }
         }
         return answer;
+    }
+    
+    public boolean isValidVps(String vps) {
+        Stack<Character> stack = new Stack<>();
+
+        for(Character c: vps.toCharArray()) {
+            if (isOpenParentheses(c)) {
+                stack.push(c);
+            } else {
+                if (!stack.isEmpty() && isMatch(stack.peek(), c)) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
     }
 
     public String rotate(String vps, int x) {
