@@ -1,46 +1,35 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.EmptyStackException;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String args[]) {
+        Solution solution = new Solution();
+        solution.solution();
+    }
+}
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        char open = '(';
-        Stack<Character> stack = new Stack<>();
-        String target = "";
-
-        int n = Integer.parseInt(br.readLine());
-
-        for(int i = 0; i < n; i++){
-            boolean isFail = false;
-            stack.clear();
-            target = String.valueOf(br.readLine());
-            for(int j = 0; j < target.length(); j++){
-                try{
-                    if(target.charAt(j) == open){
-                        stack.push(open);
-                    }
-                    else{
-                        stack.pop();
-                    }
-                }catch (EmptyStackException e){
-                    System.out.println("NO");
-                    isFail = true;
+class Solution {
+    public void solution() {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+        for(int i = 0; i < n; i++) {
+            String vps = sc.nextLine();
+            int count = 0;
+            for(Character c: vps.toCharArray()) {
+                if (c == '(') {
+                    count++;
+                } else {
+                    count--;
+                }
+                if (count < 0) {
                     break;
                 }
             }
-            if(stack.empty() && !isFail){
+            if (count == 0) {
                 System.out.println("YES");
-            }
-            else if(!isFail){
+            } else {
                 System.out.println("NO");
             }
         }
-
-
     }
 }
