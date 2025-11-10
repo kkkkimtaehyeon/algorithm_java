@@ -1,101 +1,72 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-    static ArrayList<Integer> result = new ArrayList<>();
-
-    public static void showMap(int[][] map) {
-        for(int i = 0; i < map.length; i++) {
-            for(int j = 0; j < map[0].length; j++) {
-                System.out.print(map[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static void bfs(int[][] map, int[][] bugs) {
-        Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[map.length][map[0].length];
-        int[] temp;
-        int count = 0;
-
-        int[] dy = {-1, 1, 0 ,0};
-        int[] dx = {0, 0, -1 ,1};
-
-        for(int[] bug: bugs) {
-            int bugX = bug[0];
-            int bugY = bug[1];
-
-            if(!visited[bugY][bugX]) {
-                count++;
-
-                queue.add(new int[]{bugY,bugX});
-                visited[bugY][bugX] = true;
-                map[bugY][bugX] = 2;
-
-                while(!queue.isEmpty()) {
-                    temp = queue.poll();
-                    int y = temp[0];
-                    int x = temp[1];
-
-                    for(int i = 0; i < 4; i++) {
-                        if(y+dy[i] >= 0 && y+dy[i] < map.length && x+dx[i] >= 0 && x+dx[i] < map[0].length) {
-                            if (!visited[y+dy[i]][x+dx[i]] && map[y+dy[i]][x+dx[i]] == 1) {
-                                visited[y+dy[i]][x+dx[i]] = true;
-                                map[y+dy[i]][x+dx[i]] = 2;
-                                queue.add(new int[]{y+dy[i], x+dx[i]});
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-        result.add(count);
-    }
-
+    static int[][] g;
+    static boolean[][] visited;
+    static int[] dx = new int[]{1, 0, -1, 0};
+    static int[] dy = new int[]{0, 1, 0, -1};
+    static int m; // 가로 x
+    static int n; // 세로 y
+    static int k; // 배추 심어진 위치 개수
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+        int t = Integer.parseInt(br.readLine());
 
-        int testCaseNumber = Integer.parseInt(br.readLine());
+        for (int i = 0; i < t; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            m = Integer.parseInt(st.nextToken());
+            n = Integer.parseInt(st.nextToken());
+            k = Integer.parseInt(st.nextToken());
 
+            int warm = 0;
+            g = new int[n][m];
+            visited = new boolean[n][m];
 
-
-        int[][] map;
-        int[][] bugs;
-
-        for(int i = 0; i < testCaseNumber; i++) {
-            st = new StringTokenizer(br.readLine());
-            int row = Integer.parseInt(st.nextToken());
-            int col = Integer.parseInt(st.nextToken());
-            int k = Integer.parseInt(st.nextToken());
-
-            map = new int[col][row];
-            bugs = new int[k][2];
-
-            for(int j = 0; j < k; j++) {
-
+            for (int j = 0; j < k; j++) {
                 st = new StringTokenizer(br.readLine());
-                int y = Integer.parseInt(st.nextToken());
-                int x = Integer.parseInt(st.nextToken());
-
-                map[x][y] = 1;
-                bugs[j] = new int[]{y, x};
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());
+                g[b][a] = 1;
             }
-            bfs(map, bugs);
 
-            //showMap(map);
+            for (int y = 0; y < n; y++) {
+                for (int x = 0; x < m; x++) {
+                    if (g[y][x] == 1 && !visited[y][x]) {
+                        warm++;
+                        bfs(y, x);
+                    }
+                }
+            }
+            System.out.println(warm);
         }
 
-        for(int count: result) {
-            System.out.println(count);
+
+    }
+
+    static void bfs(int y, int x) {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{y, x});
+        visited[y][x] = true;
+
+        while (!q.isEmpty()) {
+            int[] yx = q.poll();
+            y = yx[0];
+            x = yx[1];
+
+            for (int i = 0; i < 4; i++) {
+                int ny = y + dy[i];
+                int nx = x + dx[i];
+
+                if (ny >= n || nx >= m || ny < 0 || nx < 0) continue;
+                if (g[ny][nx] != 1 || visited[ny][nx]) continue;
+
+                visited[ny][nx] = true;
+                q.add(new int[]{ny, nx});
+            }
         }
     }
 }
