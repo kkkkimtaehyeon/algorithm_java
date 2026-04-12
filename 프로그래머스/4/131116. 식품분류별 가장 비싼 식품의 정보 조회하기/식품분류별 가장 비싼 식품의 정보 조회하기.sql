@@ -5,6 +5,5 @@ join (
     from FOOD_PRODUCT
     where CATEGORY in ('과자', '국', '김치', '식용유')
     group by category) f
-where fc.category = f.category and fc.price = f.max_price
+on fc.category = f.category and fc.price = f.max_price
 order by fc.price desc;
-
